@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import HeroLanding from "./App";
+import Kalendarz from "./pages/Kalendarz";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -11,6 +12,7 @@ root.render(
     <Router>
       <Routes>
         <Route path="/" element={<HeroLanding />} />
+        <Route path="/kalendarz" element={<Kalendarz />} />
       </Routes>
     </Router>
   </React.StrictMode>

@@ -48,3 +48,9 @@
     overflow: hidden;
     border-radius: 4px;
 }
+.control:active{
+    /* need to make it more appealing */
+    position:relative;
+	top:2px;
+    
+}

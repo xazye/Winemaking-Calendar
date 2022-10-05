@@ -1,6 +1,3 @@
-import { hover } from "@testing-library/user-event/dist/hover";
-import CSS from "csstype";
-import background from "./media/background.jpg";
 import "./App.css";
 const HeroLanding = () => {
   return (
