@@ -4,7 +4,7 @@ const Note = () => {
   const [note, setNote] = useState(null);
   useEffect(() => {
     getNote();
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   const getNote = async () => {
