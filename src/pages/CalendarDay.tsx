@@ -1,4 +1,5 @@
 import { CSSProperties } from "react";
+import { Link } from "react-router-dom";
 interface poop {
   date: any;
   notes: any;
@@ -38,7 +39,11 @@ const CalendarDay = ({ date, notes }: poop) => {
         {notes.map((note: any) => {
           // make it 3eq somehow, probly using lodash or smth
           if (note.created == date) {
-            return <span key={note.id}>{note.id}</span>;
+            return (
+              <Link to={`/note/${note.id}`}>
+                <span key={note.id}>{note.id}</span>
+              </Link>
+            );
           }
         })}
       </div>

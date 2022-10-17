@@ -1,19 +1,22 @@
 import { Calendar } from "@mantine/dates";
-import { useScrollIntoView } from "@mantine/hooks";
 import "dayjs/locale/pl";
-import { useState, useEffect, CSSProperties } from "react";
+import { useState, useEffect, CSSProperties, useRef } from "react";
 import CalendarDay from "./CalendarDay";
 const Kalendarz = () => {
   const [datum, setdatum] = useState<Date | null>(new Date());
   const [notes, setNotes] = useState<any[]>([]);
   const [isBusy, setBusy] = useState(true);
+  // maybe change it from any
+  const currentSelected: any = useRef(0);
 
   useEffect(() => {
     getNotes();
-    document.querySelector('[data-selected="true"]')?.scrollIntoView(false);
+    currentSelected.current = document.querySelector('[data-selected="true"]');
+    currentSelected.current.focus();
   }, []);
+
   useEffect(() => {
-    document.querySelector('[data-selected="true"]')?.scrollIntoView(false);
+    currentSelected.current = document.querySelector('[data-selected="true"]');
   }, [datum]);
 
   async function getNotes() {
@@ -23,9 +26,10 @@ const Kalendarz = () => {
   }
 
   return (
+    // add theme changer button
+    // add left siwpe, right swipe change months
     <div>
       <Calendar
-        // date needs to be only day month year for simplicity
         locale="pl"
         value={datum}
         //display weekdays when above some size
@@ -33,7 +37,6 @@ const Kalendarz = () => {
         labelFormat="MM/YYYY"
         onChange={(date) => {
           setdatum(date);
-          console.log(date);
         }}
         renderDay={(date) => {
           return isBusy ? (
@@ -44,7 +47,9 @@ const Kalendarz = () => {
             // and it will check where to put these tasks
             // THINK ABOUT MAYBE DATE RANGE FOR FUTURE
 
-            // will need to pass locale for if mobile fuuuck
+            // will need to pass locale
+            // probly pass if busy, the whole thing turns into loading,
+            // instead of only tasks
 
             // prolly make CalendarDAymobile and CalendarDAy
             // so you won't have to fuck with styling too much
@@ -52,21 +57,14 @@ const Kalendarz = () => {
           );
         }}
         onMonthChange={(date) => {
-          // make this scroll to top when changing months
-          // but scroll to today when on right month
-          //! Problem, this is called when leaving month
-          //  problem solved
-          //! Problem, won't scroll with data-selected="true",
-          // if only i could set id on selected button
-          // window.scroll(0, 0);
-          console.log(date.toDateString());
-          console.log(new Date().toDateString());
-          console.log(date.toDateString() === new Date().toDateString());
+          // think about this solution
+          // it's not 100% working
+          // if i pick date from year/month picker
+          // it changes date to 1st of that month, so the eq false
+          // i need to rework it
           date.toDateString() === new Date().toDateString()
-            ? console.log(document.querySelector('[data-selected="true"]'))
+            ? currentSelected.current.focus()
             : window.scroll(0, 0);
-
-          // console.log(document.querySelector('[data-selected="true"]'));
         }}
         fullWidth
         styles={(theme) => ({

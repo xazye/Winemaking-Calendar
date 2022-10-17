@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import HeroLanding from "./App";
 import Calendar from "./pages/Kalendarz";
+import Note from "./pages/Note";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -13,7 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<HeroLanding />} />
         <Route path="/kalendarz" element={<Calendar />} />
-        <Route path="/note/:id" />
+        <Route path="/note/:id" element={<Note />} />
       </Routes>
     </Router>
   </React.StrictMode>

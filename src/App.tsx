@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./App.css";
 const HeroLanding = () => {
   return (
@@ -12,7 +13,9 @@ const HeroLanding = () => {
           o twoich trunkach! Zapisuj swoje ukochane przepisy w chmurze,
           przeglądaj zdjęcia swoich seksownych nastawów, a wszystko to ZA DARMO.
         </div>
-        <div className="control">Ayyyyyyy, wpuść mnie</div>
+        <Link to={"/kalendarz"}>
+          <div className="control">Ayyyyyyy, wpuść mnie</div>
+        </Link>
       </div>
     </div>
   );
