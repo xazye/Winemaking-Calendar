@@ -1,5 +1,0 @@
-const Note = () => {
-  
-    const urlparams = useParams();
-  
-    const [note, setNote] = useState(null);
