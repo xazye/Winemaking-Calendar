@@ -4,6 +4,8 @@ import { useState} from "react";
 import prisma from "../../lib/prisma";
 import { GetStaticProps} from "next"
 import DayTile from "../../components/DayTile";
+import { Flex, MantineTheme } from "@mantine/core";
+import Sidebar from "../../components/Sidebar";
 
 export const getStaticProps: GetStaticProps = async () => {
   const recipes = await prisma.recipe.findMany()
@@ -19,7 +21,12 @@ const Kalendarz = ({recipes}) => {
     const [datum, setdatum] = useState<Date | null>(new Date());
     
     return (
-      <div>
+      <div style={{
+      display:"flex", 
+      flexDirection:"row",
+
+    }}>
+      <Sidebar/>
         <Calendar
           locale="pl"
           allowLevelChange={false}
@@ -33,7 +40,7 @@ const Kalendarz = ({recipes}) => {
           ;}}
           fullWidth
           size="xl"
-          styles={(theme: { colorScheme: string; colors: { dark: any[]; gray: any[]; }; fontSizes: { lg: any; xl: any; }; }) => ({
+          styles={(theme: MantineTheme) => ({
             cell: {
               border: `1px solid ${
                 theme.colorScheme === "dark"
@@ -43,7 +50,7 @@ const Kalendarz = ({recipes}) => {
             },
             day: {
               borderRadius: 2,
-              height: "12vh",
+              height: "16vh",
               fontSize: theme.fontSizes.lg,
               lineHeight: 0,
             },
@@ -65,6 +72,9 @@ const Kalendarz = ({recipes}) => {
               }`,
               height: 70,
             },
+            // calendarHeader:{height:"vh"},
+            calendarHeaderControl:{order:"-1"}
+
           })}
         />
       </div>

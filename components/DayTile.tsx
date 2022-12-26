@@ -23,7 +23,10 @@ const DayTile = ({recipes, date}) =>{
          let recipeDate=dayjs(recipe.created)
          // this need a serioius fucking re do 
          // maaaaaan
-         if(recipeDate.diff(date,"day",true)<0.09 && recipeDate.diff(date,"day",true)>0.00 )
+        //  old code to admire my creativity
+        // and inability to work with provided tools
+        //  if(recipeDate.diff(date,"day",true)<0.09 && recipeDate.diff(date,"day",true)>0.00 )
+        if(recipeDate.isSame(date,"day") )
          {return <span key={recipe.id}>{recipe.title}</span>;}
        })
      )}
