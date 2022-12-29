@@ -27,6 +27,7 @@ model Recipe {
   id        String  @id @default(cuid())
   title     String
   content   String?
+  label String?
   author    User?   @relation(fields: [name], references: [id])
   name  String?
   created  DateTime @default(now()) @db.Date

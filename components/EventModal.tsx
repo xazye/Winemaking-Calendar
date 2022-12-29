@@ -1,20 +1,46 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, ColorPicker, Modal } from "@mantine/core";
 import dayjs from "dayjs";
 interface Note {
   title: string;
-  description: string;
-  label: Number;
+  content: string;
+  date: String;
+  label: string;
 }
+
+// rethink the use of colorpicker
+// problem with font visiblity
+// maaaaaaaaaaaaaaan
 
 function EventModal({ date }) {
   const [opened, setOpened] = useState<boolean>(false);
-  const titleRef=useRef()
-  const descriptionRef=useRef()
-//  now, why this one is using usestate?
-// when you click one of swatches
-// you need to update component
-   const [label,setLabel]= useState("#750ec9")
+  const titleRef = useRef(null);
+  const contentRef = useRef(null);
+  //  now, why this one is using usestate?
+  // when you click one of swatches
+  // you need to update component
+  const [label, setLabel] = useState("#750ec9");
+
+  const submitData = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    // console.log(new Date (dayjs(date).format(`YYYY-MM-DD`)))
+    try {
+      const note: Note = {
+        title: titleRef.current.value,
+        content: contentRef.current.value,
+        date: dayjs(date).format(`YYYY-MM-DD`),
+        label,
+      };
+      await fetch("/api/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(note),
+      });
+      setOpened(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -24,21 +50,15 @@ function EventModal({ date }) {
         centered="true"
         overlayOpacity={0.2}
         styles={{
-            header:{
-                height:0,
-                margin:0,
-                
-            }
+          header: {
+            height: 0,
+            margin: 0,
+          },
         }}
       >
         {/* Modal content */}
         <form
-        onSubmit={(e)=>{
-            e.preventDefault()
-
-            console.log(labelRef.current);
-            
-        }}
+          onSubmit={submitData}
           style={{
             display: "grid",
             gridTemplateColumns: "40px auto",
@@ -49,8 +69,8 @@ function EventModal({ date }) {
             type="text"
             name="title"
             placeholder="Add title"
-            value={titleRef.current}
             required
+            ref={titleRef}
             style={{
               gridColumnStart: "2",
               paddingBottom: "0.5rem",
@@ -70,9 +90,9 @@ function EventModal({ date }) {
           <span> BB</span>{" "}
           <input
             type="text"
-            name="description"
-            placeholder="Add a description"
-            value={descriptionRef.current}
+            name="content"
+            placeholder="Add a content"
+            ref={contentRef}
             required
             style={{
               gridColumnStart: "2",
@@ -91,7 +111,7 @@ function EventModal({ date }) {
             size="xs"
             value={label}
             onChange={(e) => {
-              setLabel(e)
+              setLabel(e);
             }}
             swatches={[
               "#25262b",
@@ -110,18 +130,15 @@ function EventModal({ date }) {
               "#fd7e14",
             ]}
           />
-          <button
+          <input
             style={{
               gridRowStart: -1,
               gridColumnStart: 1,
               gridColumnEnd: -1,
             }}
             type="submit"
-          
-            className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
-          >
-            Save
-          </button>
+            value="Save"
+          />
         </form>
       </Modal>
 
