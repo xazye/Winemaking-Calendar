@@ -1,17 +1,26 @@
 import { Calendar } from "@mantine/dates";
 import "dayjs/locale/pl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DayTile from "../../components/DayTile";
-import { MantineTheme } from "@mantine/core";
 import Sidebar from "../../components/Sidebar";
 import useSWR from "swr";
+import { useStyles } from "../../styles/calendar.style";
 
 // make global swr config
 // remeber about mutate
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+const fetcher = async (
+  input: RequestInfo,
+  init: RequestInit,
+  ...args: any[]
+) => {
+  const res = await fetch(input, init);
+  return res.json();
+};
 
 const Kalendarz = () => {
   const [datum, setdatum] = useState<Date | null>(new Date());
+  const { classes } = useStyles();
 
   // to do
   // change interval to mutate
@@ -22,11 +31,6 @@ const Kalendarz = () => {
     isLoading,
   } = useSWR("/api/getrecipes", fetcher, { refreshInterval: 1000 });
 
-  useEffect(() => {
-    console.log(isLoading);
-    console.log(recipes);
-  }, []);
-
   //to implement
   //
   if (isLoading) return <div>loading...</div>;
@@ -35,14 +39,16 @@ const Kalendarz = () => {
   //
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
+    <main className={classes.main}>
       <Sidebar />
       <Calendar
+        classNames={{
+          cell: classes.cell,
+          day: classes.day,
+          weekday: classes.weekday,
+          weekdayCell: classes.weekdayCell,
+          calendarHeaderControl: classes.calendarHeaderControl,
+        }}
         locale="pl"
         allowLevelChange={false}
         value={datum}
@@ -54,43 +60,9 @@ const Kalendarz = () => {
         }}
         fullWidth
         size="xl"
-        styles={(theme: MantineTheme) => ({
-          cell: {
-            border: `1px solid ${
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[4]
-                : theme.colors.gray[2]
-            }`,
-          },
-          day: {
-            borderRadius: 2,
-            height: "16vh",
-            fontSize: theme.fontSizes.lg,
-            lineHeight: 0,
-          },
-          weekday: {
-            fontSize: theme.fontSizes.lg,
-            display: "flex",
-            flexDirection: "column-reverse",
-          },
-          weekdayCell: {
-            fontSize: theme.fontSizes.xl,
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[5]
-                : theme.colors.gray[0],
-            border: `1px solid ${
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[4]
-                : theme.colors.gray[2]
-            }`,
-            height: 70,
-          },
-          // calendarHeader:{height:"vh"},
-          calendarHeaderControl: { order: "-1" },
-        })}
       />
-    </div>
+    </main>
   );
 };
+
 export default Kalendarz;

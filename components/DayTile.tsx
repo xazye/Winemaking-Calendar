@@ -1,44 +1,25 @@
 import dayjs from "dayjs";
-import { CSSProperties } from "react";
-
-const dayy: CSSProperties = {
-  display: "flex",
-  alignItems: "flex-start",
-  flexDirection: "column",
-  lineHeight: "1rem",
-  height: "100%",
-};
+import { useStyles } from "../styles/dayTile.style";
 
 // add recipes interface later
 // addd styling
 
 const DayTile = ({ recipes, date }) => {
   const day = date.getDate();
+  const { classes } = useStyles();
+
   return (
-    <div style={dayy}>
-      <span
-        style={{
-          padding: "10px",
-          alignContent: "center",
-          margin: "0 auto",
-          boxSizing: "border-box",
-        }}
-      >
-        {day}
-      </span>
+    <div className={classes.dayTile}>
+      <span className={classes.day}>{day}</span>
       {recipes.map((recipe) => {
         let recipeDate = dayjs(recipe.created);
         if (recipeDate.isSame(date, "day")) {
           return (
             <span
               // fix overflow
+              className={classes.dayRecipe}
               style={{
                 backgroundColor: recipe.label,
-                alignContent: "center",
-                margin: "0 auto",
-                width: "80%",
-                borderRadius: "10px",
-                boxSizing: "border-box",
               }}
               key={recipe.id}
             >

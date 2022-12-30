@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Button, ColorPicker, Modal } from "@mantine/core";
 import dayjs from "dayjs";
+import { useStyles } from "../styles/eventmodal.style";
 interface Note {
   title: string;
   content: string;
@@ -14,6 +15,7 @@ interface Note {
 
 function EventModal({ date }) {
   const [opened, setOpened] = useState<boolean>(false);
+  const { classes } = useStyles();
   const titleRef = useRef(null);
   const contentRef = useRef(null);
   //  now, why this one is using usestate?
@@ -46,41 +48,22 @@ function EventModal({ date }) {
     <>
       <Modal
         opened={opened}
+        classNames={{ header: classes.header }}
         onClose={() => setOpened(false)}
-        centered="true"
+        centered
         overlayOpacity={0.2}
-        styles={{
-          header: {
-            height: 0,
-            margin: 0,
-          },
-        }}
       >
         {/* Modal content */}
-        <form
-          onSubmit={submitData}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "40px auto",
-            gridTemplateRows: "50px 50px 50px auto ",
-          }}
-        >
+        <form onSubmit={submitData} className={classes.form}>
           <input
             type="text"
             name="title"
             placeholder="Add title"
             required
             ref={titleRef}
+            className={classes.input}
             style={{
               gridColumnStart: "2",
-              paddingBottom: "0.5rem",
-              paddingTop: "0.75rem",
-              color: "#4B5563",
-              width: "100%",
-              borderWidth: "0",
-              borderBottomWidth: "2px",
-              borderColor: "#E5E7EB",
-              outline: "none",
             }}
           />
           <span style={{ gridColumnStart: "1" }}>Clock</span>
@@ -94,16 +77,9 @@ function EventModal({ date }) {
             placeholder="Add a content"
             ref={contentRef}
             required
+            className={classes.input}
             style={{
               gridColumnStart: "2",
-              paddingBottom: "0.5rem",
-              paddingTop: "0.75rem",
-              color: "#4B5563",
-              width: "100%",
-              borderWidth: "0",
-              borderBottomWidth: "2px",
-              borderColor: "#E5E7EB",
-              outline: "none",
             }}
           />
           <ColorPicker

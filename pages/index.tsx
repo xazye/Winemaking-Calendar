@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -12,19 +12,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.root}>
-      <div className={styles.inner}>
-        <h1 className={styles.title}>
-          Twój <span className={styles.hlght}>Kalendarzyk Winiarza</span> jest gotowy
-          Ci pomóc.
-        </h1>
-        <div className={styles.description}>
-          Przekonaj się jak łatwe potrafi być tworzenie i przechowywanie notatek
-          o twoich trunkach! Zapisuj swoje ukochane przepisy w chmurze,
-          przeglądaj zdjęcia swoich seksownych nastawów, a wszystko to ZA DARMO.
+        <div className={styles.inner}>
+          <h1 className={styles.title}>
+            Twój <span className={styles.hlght}>Kalendarzyk Winiarza</span> jest
+            gotowy Ci pomóc.
+          </h1>
+          <div className={styles.description}>
+            Przekonaj się jak łatwe potrafi być tworzenie i przechowywanie
+            notatek o twoich trunkach! Zapisuj swoje ukochane przepisy w
+            chmurze, przeglądaj zdjęcia swoich seksownych nastawów, a wszystko
+            to ZA DARMO.
+          </div>
+          <Link href="/calendar/calendar" className={styles.control}>
+            Ayyyyyyy, wpuść mnie
+          </Link>
         </div>
-        <Link href="/calendar/calendar"className={styles.control}>Ayyyyyyy, wpuść mnie</Link>
       </div>
-    </div>
     </>
-  )
+  );
 }
