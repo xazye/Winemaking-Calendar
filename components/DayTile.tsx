@@ -11,6 +11,7 @@ const DayTile = ({ recipes, date }) => {
   return (
     <div className={classes.dayTile}>
       <span className={classes.day}>{day}</span>
+
       {recipes.map((recipe) => {
         let recipeDate = dayjs(recipe.created);
         if (recipeDate.isSame(date, "day")) {

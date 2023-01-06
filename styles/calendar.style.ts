@@ -1,40 +1,44 @@
-import { createStyles, MantineTheme } from '@mantine/core';
-export const useStyles = createStyles((theme:MantineTheme) => ({
-  main:{ 
+import { createStyles, MantineTheme } from "@mantine/core";
+export const useStyles = createStyles((theme: MantineTheme) => ({
+  main: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   cell: {
     border: `1px solid ${
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[4]
-        : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
   },
   day: {
     borderRadius: 2,
-    height: "16vh",
+    minHeight: "16vh",
     fontSize: theme.fontSizes.lg,
-    lineHeight: 0,
-  }, weekday: {
+    // height: "auto",
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "flex-start",
+    "&:hover": { overflowY: "scroll" },
+  },
+  weekday: {
     fontSize: theme.fontSizes.lg,
     display: "flex",
     flexDirection: "column-reverse",
   },
   weekdayCell: {
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      width: "100px",
+    },
     fontSize: theme.fontSizes.xl,
     backgroundColor:
       theme.colorScheme === "dark"
         ? theme.colors.dark[5]
         : theme.colors.gray[0],
     border: `1px solid ${
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[4]
-        : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
-    height: 70,
+    height: "70px",
   },
   calendarHeaderControl: {
-            order: -1,
-          },
-}))
+    order: -1,
+  },
+}));
